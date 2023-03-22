@@ -65,14 +65,16 @@ const itemsRead = function() {
     for (let uid in items) {
       const newDivChild = tagDivChild.cloneNode(true);
       tagDivParent.appendChild(newDivChild);
+      const item = items[uid];
       const itemsNameObject = document.getElementsByName('items-name')[index];
       const itemsEnterObject = document.getElementsByName('items-enter')[index];
       const itemsExpireObject = document.getElementsByName('items-expire')[index];
       const itemsDeleteObject = document.getElementsByName('items-delete')[index];
-      itemsNameObject.value = items[index].name;
-      itemsEnterObject.value = items[index].age;
-      itemsExpireObject.index = index;
+      itemsNameObject.innerHTML = item.name;
+      itemsEnterObject.innerHTML = item.enter;
+      itemsExpireObject.value = item.expire;
       itemsDeleteObject.index = index;
+      index += 1;
     }
     console.log('Read', items);
   });
