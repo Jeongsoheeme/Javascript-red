@@ -41,16 +41,15 @@ const ajax = function(method, url, data, callback) {
 };
 
 const itemsCreate = function(form) {
-  const itemNameObject = form['item-name'];
-  const itemAgeObject = form['item-age'];
+  const itemNameObject = form['name'];
   const item = {
     name: itemNameObject.value,
-    age: itemAgeObject.value
+    enter: '2023-03-22',
+    expire: '2023-03-29'
   };
 
-  axios.post('http://localhost:3100/api/v1/items', item).then(function(response) {
+  axios.post('https://javascript-red-jsh-default-rtdb.firebaseio.com/items.json', item).then(function(response) {
     itemNameObject.value = '';
-    itemAgeObject.value = '';
     itemsRead();
   });
 

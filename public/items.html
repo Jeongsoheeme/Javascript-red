@@ -42,9 +42,9 @@
     </header>
     <div class="contents">
       <article>
-        <form class="form-inputs">
+        <form class="form-inputs" onsubmit="event.preventDefault(); itemsCreate(this);">
           <input type="text" name="name" placeholder="Create" />
-          <button class="button-create"><span class="material-icons">edit</span></button>
+          <button type="submit" class="button-create"><span class="material-icons">edit</span></button>
         </form>
         <div class="div-table">
           <table>
