@@ -73,7 +73,7 @@ const itemsRead = function() {
       itemsNameObject.innerHTML = item.name;
       itemsEnterObject.innerHTML = item.enter;
       itemsExpireObject.value = item.expire;
-      itemsDeleteObject.index = index;
+      itemsDeleteObject.uid = uid;
       index += 1;
     }
     console.log('Read', items);
@@ -82,8 +82,8 @@ const itemsRead = function() {
 
 itemsRead();
 
-const itemsDelete = function(index) {
-  const url = 'http://localhost:3100/api/v1/items/' + index;
+const itemsDelete = function(uid) {
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/items/' + uid + '.json';
   axios.delete(url).then(function(){
     itemsRead();
   });
