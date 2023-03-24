@@ -20,23 +20,29 @@
 
 let groceries;
 
-const groceriesCreate = function(index, uid) {
-  console.log(index, uid);
-  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries/' + uid + '.json';
-  const itemsNameObject = document.getElementsByName('items-name')[index];
-  const itemsEnterObject = document.getElementsByName('items-enter')[index];
-  const itemsExpireObject = document.getElementsByName('items-expire')[index];
-  const grocery = {
-    name: itemsNameObject.innerHTML,
-    enter: itemsEnterObject.innerHTML,
-    expire: itemsExpireObject.value
-  };
-
-  axios.put(url, grocery).then(function() {
+const groceriesCreate = function(input) {
+  console.log(input);
+  const index = input.index;
+  const uid = input.uid;
+  const checked = input.checked;
+  if (checked) {
+    const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries/' + uid + '.json';
+    const itemsNameObject = document.getElementsByName('items-name')[index];
+    const itemsEnterObject = document.getElementsByName('items-enter')[index];
+    const itemsExpireObject = document.getElementsByName('items-expire')[index];
+    const grocery = {
+      name: itemsNameObject.innerHTML,
+      enter: itemsEnterObject.innerHTML,
+      expire: itemsExpireObject.value
+    };
+  
+    axios.put(url, grocery);
     //patch: 해당 항목만 수정하겠다(잘안쓴다) put: 싹 지우고 내가 가지고 있는것만 쓰겠다(많이쓴다)
-    // groceryNameObject.value = '';
-    // groceriesRead();
-  });
+  } else {
+    // delete
+    groceriesDelete(uid, 'items');
+  }
+
 
 };
 
@@ -72,10 +78,10 @@ const groceriesRead = function() {
 
 // groceriesRead();
 
-const groceriesDelete = function(uid) {
+const groceriesDelete = function(uid, from) {
   const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries/' + uid + '.json';
   axios.delete(url).then(function(){
-    groceriesRead();
+    from === 'groceries' && groceriesRead();
   });
 };
 
