@@ -20,26 +20,6 @@
 
 let items;
 
-const ajax = function(method, url, data, callback) {
-  const xhrObject = new XMLHttpRequest();
-  xhrObject.onreadystatechange = function() {
-    if (xhrObject.readyState !== 4) return;
-    if (xhrObject.status === 200) {
-      callback(xhrObject);
-    } else {
-      const error = {
-        status: xhrObject.status,
-        statusText: xhrObject.statusText,
-        responseText: xhrObject.responseText
-      }
-      console.error(error);
-    }
-  };
-  xhrObject.open(method, url);
-  xhrObject.setRequestHeader('Content-Type', 'application/json');
-  xhrObject.send(JSON.stringify(data));
-};
-
 const itemsCreate = function(form) {
   const itemNameObject = form['item-name'];
   const item = {
@@ -70,10 +50,15 @@ const itemsRead = function() {
       const itemsEnterObject = document.getElementsByName('items-enter')[index];
       const itemsExpireObject = document.getElementsByName('items-expire')[index];
       const itemsDeleteObject = document.getElementsByName('items-delete')[index];
+      const itemsGroceryObject = document.getElementsByName('items-grocery')[index];
       itemsNameObject.innerHTML = item.name;
       itemsEnterObject.innerHTML = item.enter;
       itemsExpireObject.value = item.expire;
-      itemsDeleteObject.index = index;
+      itemsExpireObject.index = index;
+      itemsExpireObject.uid = uid;
+      itemsDeleteObject.uid = uid;
+      itemsGroceryObject.index = index;
+      itemsGroceryObject.uid = uid;
       index += 1;
     }
     console.log('Read', items);
@@ -82,21 +67,23 @@ const itemsRead = function() {
 
 itemsRead();
 
-const itemsDelete = function(index) {
-  const url = 'http://localhost:3100/api/v1/items/' + index;
+const itemsDelete = function(uid) {
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/items/' + uid + '.json';
   axios.delete(url).then(function(){
     itemsRead();
   });
 };
 
-const itemsUpdate = function(index) {
-  const url = 'http://localhost:3100/api/v1/items/' + index;
+const itemsUpdate = function(index, uid) {
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/items/' + uid + '.json';
   
-  const name = document.getElementsByName('items-name')[index].value;
-  const age = document.getElementsByName('items-age')[index].value;
+  const name = document.getElementsByName('items-name')[index].innerHTML;
+  const enter = document.getElementsByName('items-enter')[index].innerHTML;
+  const expire = document.getElementsByName('items-expire')[index].value;
   const item = {
     name: name,
-    age: age
+    enter: enter,
+    expire: expire
   };
   
   axios.patch(url, item).then(function(){
