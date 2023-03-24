@@ -20,26 +20,6 @@
 
 let items;
 
-const ajax = function(method, url, data, callback) {
-  const xhrObject = new XMLHttpRequest();
-  xhrObject.onreadystatechange = function() {
-    if (xhrObject.readyState !== 4) return;
-    if (xhrObject.status === 200) {
-      callback(xhrObject);
-    } else {
-      const error = {
-        status: xhrObject.status,
-        statusText: xhrObject.statusText,
-        responseText: xhrObject.responseText
-      }
-      console.error(error);
-    }
-  };
-  xhrObject.open(method, url);
-  xhrObject.setRequestHeader('Content-Type', 'application/json');
-  xhrObject.send(JSON.stringify(data));
-};
-
 const itemsCreate = function(form) {
   const itemNameObject = form['item-name'];
   const item = {
@@ -70,12 +50,15 @@ const itemsRead = function() {
       const itemsEnterObject = document.getElementsByName('items-enter')[index];
       const itemsExpireObject = document.getElementsByName('items-expire')[index];
       const itemsDeleteObject = document.getElementsByName('items-delete')[index];
+      const itemsGroceryObject = document.getElementsByName('items-grocery')[index];
       itemsNameObject.innerHTML = item.name;
       itemsEnterObject.innerHTML = item.enter;
       itemsExpireObject.value = item.expire;
       itemsExpireObject.index = index;
       itemsExpireObject.uid = uid;
       itemsDeleteObject.uid = uid;
+      itemsGroceryObject.index = index;
+      itemsGroceryObject.uid = uid;
       index += 1;
     }
     console.log('Read', items);
