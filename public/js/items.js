@@ -73,6 +73,8 @@ const itemsRead = function() {
       itemsNameObject.innerHTML = item.name;
       itemsEnterObject.innerHTML = item.enter;
       itemsExpireObject.value = item.expire;
+      itemsExpireObject.index = index;
+      itemsExpireObject.uid = uid;
       itemsDeleteObject.uid = uid;
       index += 1;
     }
@@ -89,14 +91,16 @@ const itemsDelete = function(uid) {
   });
 };
 
-const itemsUpdate = function(index) {
-  const url = 'http://localhost:3100/api/v1/items/' + index;
+const itemsUpdate = function(index, uid) {
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/items/' + uid + '.json';
   
-  const name = document.getElementsByName('items-name')[index].value;
-  const age = document.getElementsByName('items-age')[index].value;
+  const name = document.getElementsByName('items-name')[index].innerHTML;
+  const enter = document.getElementsByName('items-enter')[index].innerHTML;
+  const expire = document.getElementsByName('items-expire')[index].value;
   const item = {
     name: name,
-    age: age
+    enter: enter,
+    expire: expire
   };
   
   axios.patch(url, item).then(function(){

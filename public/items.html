@@ -81,7 +81,7 @@
                 <td><input type="checkbox" onchange="" /></td> <!--리액트에서는 싱글태그일때 /> 기호를 사용해서 닫아줘야 오류가 안난다-->
                 <td name="items-name"></td>
                 <td name="items-enter"></td>
-                <td class="td-expire"><input name="items-expire" type="date" value="" onchange="" /></td>
+                <td class="td-expire"><input name="items-expire" type="date" value="" onchange="itemsUpdate(index, uid)" /></td>
                 <td class="td-delete">
                   <button class="button-delete" name= "items-delete" onclick="itemsDelete(uid)"><span class="material-icons">delete</span></button>
                 </td>
