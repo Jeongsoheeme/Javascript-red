@@ -124,7 +124,7 @@
         </table>
         <div class="modal-footer">
           <button class="button-close" onclick="event.preventDefault(); modalToggle();"><span class="material-icons">close</span></button>
-          <button class="button-update" type="button"><span class="material-icons">edit_note</span></button>
+          <button name="grocery-update" class="button-update" type="button" onclick="groceriesUpdate(uid)"><span class="material-icons">edit_note</span></button>
         </div>
       </form>
     </div>
@@ -146,10 +146,14 @@
     const groceryEnterObject = document.getElementsByName('grocery-enter')[0];
     const groceriesExpireObject = document.getElementsByName('groceries-expire')[index];
     const groceryExpireObject = document.getElementsByName('grocery-expire')[0];
-
     groceryNameObject.value = groceriesNameObject.innerHTML;
     groceryEnterObject.value = groceriesEnterObject.innerHTML;
     groceryExpireObject.value = groceriesExpireObject.innerHTML;
+    
+    const groceriesUpdateObject = document.getElementsByName('groceries-update')[index];
+    const groceryUpdateObject = document.getElementsByName('grocery-update')[0];
+    groceryUpdateObject.uid = groceriesUpdateObject.uid;
+
   }
 
   groceriesRead();
