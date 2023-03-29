@@ -69,6 +69,7 @@ const groceriesRead = function() {
       groceriesExpireObject.uid = uid;
       groceriesDeleteObject.uid = uid;
       groceriesUpdateObject.uid = uid;
+      groceriesUpdateObject.index = index;
       index += 1;
     }
     console.log('Read', groceries);
@@ -93,6 +94,7 @@ const groceriesUpdate = function(index, uid) {
     enter: enter,
     expire: expire
   };
+
   
   axios.patch(url, grocery).then(function(){
     groceriesRead();
