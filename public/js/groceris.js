@@ -40,10 +40,8 @@ const groceriesCreate = function(input) {
     //patch: 해당 항목만 수정하겠다(잘안쓴다) put: 싹 지우고 내가 가지고 있는것만 쓰겠다(많이쓴다)
   } else {
     // delete
-    groceriesDelete(uid, 'items');
+    groceriesDelete(uid);
   }
-
-
 };
 
 const groceriesRead = function() {
@@ -76,12 +74,10 @@ const groceriesRead = function() {
   });
 };
 
-// groceriesRead();
-
-const groceriesDelete = function(uid, from) {
+const groceriesDelete = function(uid, callback) {
   const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries/' + uid + '.json';
   axios.delete(url).then(function(){
-    from === 'groceries' && groceriesRead();
+    callback && callback();
   });
 };
 
