@@ -1,6 +1,3 @@
-// // 주소에 쿼리스트링 받아오기
-// const queryString = new URLSearchParams(window.location.search);
-// const nameText = queryString.get('grocery-name');
 
 // // html name에 접근
 // const inputTextObjects = document.getElementsByName('grocery-name');
@@ -44,24 +41,35 @@ const groceriesCreate = function(input) {
   }
 };
 
-const groceriesRead = function() {
+const groceriesRead = function(q) {
   axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries.json').then(function(response) {
-    groceries = response.data;
+    // groceries = response.data;
     const tagDivParent = document.getElementById('tag-tbody-parent');
     tagDivParent.innerHTML = '';
     const tagDivChild = document.getElementById('tag-tr-child');
-    let index = 0;
-    for (let uid in groceries) {
+    const groceries = [];
+    
+    for (let uid in response.data) {
+      const grocery = response.data[uid];
+      grocery.uid = uid;
+      if(grocery.name.includes(q)){
+        groceries.push(grocery);
+      }
+    }
+    
+    console.log(groceries);
+    for (let index in groceries) {
+      const uid = groceries[index].uid;
       const newDivChild = tagDivChild.cloneNode(true);
       tagDivParent.appendChild(newDivChild);
-      const grocery = groceries[uid];
+      const grocery = groceries[index];
       const groceriesSequenceObject = document.getElementsByName('groceries-sequence')[index];
       const groceriesNameObject = document.getElementsByName('groceries-name')[index];
       const groceriesEnterObject = document.getElementsByName('groceries-enter')[index];
       const groceriesExpireObject = document.getElementsByName('groceries-expire')[index];
       const groceriesDeleteObject = document.getElementsByName('groceries-delete')[index];
       const groceriesUpdateObject = document.getElementsByName('groceries-update')[index];
-      groceriesSequenceObject.innerHTML = index+1;
+      groceriesSequenceObject.innerHTML = Number(index)+1;
       groceriesNameObject.innerHTML = grocery.name;
       groceriesEnterObject.innerHTML = grocery.enter;
       groceriesExpireObject.innerHTML = grocery.expire;
@@ -70,7 +78,6 @@ const groceriesRead = function() {
       groceriesDeleteObject.uid = uid;
       groceriesUpdateObject.uid = uid;
       groceriesUpdateObject.index = index;
-      index += 1;
     }
     console.log('Read', groceries);
   });

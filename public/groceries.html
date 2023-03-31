@@ -156,6 +156,11 @@
 
   }
 
-  groceriesRead();
+// 주소에 쿼리스트링 받아오기
+const queryString = new URLSearchParams(window.location.search);
+const q = queryString.get('q') || '';
+
+
+  groceriesRead(q);
 
 </script>
