@@ -47,7 +47,6 @@ const groceriesRead = function(q) {
       }
     }
     
-    console.log(groceries);
     for (let index in groceries) {
       const uid = groceries[index].uid;
       const newDivChild = tagDivChild.cloneNode(true);
