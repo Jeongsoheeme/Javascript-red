@@ -33,7 +33,6 @@ const groceriesCreate = function(input) {
 
 const groceriesRead = function(q) {
   axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries.json').then(function(response) {
-    // groceries = response.data;
     const tagDivParent = document.getElementById('tag-tbody-parent');
     tagDivParent.innerHTML = '';
     const tagDivChild = document.getElementById('tag-tr-child');
