@@ -1,19 +1,9 @@
 
-// // html name에 접근
-// const inputTextObjects = document.getElementsByName('grocery-name');
-// inputTextObject = inputTextObjects[0];
-
-// // input value 값 넣기
-// inputTextObject.value = nameText;
-
 // // 주소에 쿼리스트링 배열로 받기
 // const inputHiddenList = queryString.getAll('input-hidden');
 // const inputHidden = inputHiddenList[0];
 
 // const todoList = 1;
-
-// inputTextObject.focus();
-// inputTextObject.blur();
 
 let groceries;
 
@@ -52,7 +42,7 @@ const groceriesRead = function(q) {
     for (let uid in response.data) {
       const grocery = response.data[uid];
       grocery.uid = uid;
-      if(grocery.name.includes(q)){
+      if(grocery.name.indexOf(q) >= 0){
         groceries.push(grocery);
       }
     }

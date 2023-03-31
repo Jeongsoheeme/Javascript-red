@@ -160,6 +160,15 @@
 const queryString = new URLSearchParams(window.location.search);
 const q = queryString.get('q') || '';
 
+// html name에 접근
+const qObjects = document.getElementsByName('q'); //id 값으로 하면 q값을 안 넘긴다.
+const qObject = qObjects[0];
+
+// input value 값 넣기
+qObject.value = q;
+
+qObject.focus(); //새로고침을 하면 포커스가 자동으로 됨
+// inputTextObject.blur(); //새로고침을 하면 포커스가 없어짐
 
   groceriesRead(q);
 
