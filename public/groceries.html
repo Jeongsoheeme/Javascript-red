@@ -55,22 +55,22 @@
                 <th>
                   <span class="title-names">
                     Name
-                    <span class="material-icons order"><a href="?orderKind=name&orderType=asc">arrow_drop_up</a></span>
-                    <span class="material-icons order"><a href="?orderKind=name&orderType=desc">arrow_drop_down</a></span>
+                    <span class="material-icons" id="order-name-asc"><a href="?orderColumn=name&orderDirection=asc">arrow_drop_up</a></span>
+                    <span class="material-icons" id="order-name-desc"><a href="?orderColumn=name&orderDirection=desc">arrow_drop_down</a></span>
                   </span>
                 </th>
                 <th>
                   <span class="title-names">
                     Enter
-                    <span class="material-icons order"><a href="?orderKind=enter&orderType=asc">arrow_drop_up</a></span>
-                    <span class="material-icons order"><a href="?orderKind=enter&orderType=desc">arrow_drop_down</a></span>
+                    <span class="material-icons" id="order-enter-asc"><a href="?orderColumn=enter&orderDirection=asc">arrow_drop_up</a></span>
+                    <span class="material-icons" id="order-enter-desc"><a href="?orderColumn=enter&orderDirection=desc">arrow_drop_down</a></span>
                   </span>
                 </th>
                 <th>
                   <span class="title-names">
                     Expire
-                    <span class="material-icons order"><a href="?orderKind=expire&orderType=asc">arrow_drop_up</a></span>
-                    <span class="material-icons order"><a href="?orderKind=expire&orderType=desc">arrow_drop_down</a></span>
+                    <span class="material-icons" id="order-expire-asc"><a href="?orderColumn=expire&orderDirection=asc">arrow_drop_up</a></span>
+                    <span class="material-icons" id="order-expire-desc"><a href="?orderColumn=expire&orderDirection=desc">arrow_drop_down</a></span>
                   </span>
                 </th>
                 <th>Edit</th>
@@ -159,9 +159,9 @@
 // 주소에 쿼리스트링 받아오기
 const queryString = new URLSearchParams(window.location.search);
 const q = queryString.get('q') || '';
-const orderKind = queryString.get('orderKind');
-const orderType = queryString.get('orderType');
-console.warn(orderKind, orderType);
+const orderColumn = queryString.get('orderColumn') || 'expire';
+const orderDirection = queryString.get('orderDirection') || 'asc';
+console.warn(orderColumn, orderDirection);
 
 // html name에 접근
 const qObjects = document.getElementsByName('q'); //id 값으로 하면 q값을 안 넘긴다.
@@ -173,27 +173,7 @@ qObject.value = q;
 qObject.focus(); //새로고침을 하면 포커스가 자동으로 됨
 // inputTextObject.blur(); //새로고침을 하면 포커스가 없어짐
 
-// 정렬버튼 active 시키기
-const orderObjects = document.getElementsByClassName('order');
-console.warn(orderObjects);
-
-if(orderKind === 'name' && orderType === 'asc' ) {
-  orderObjects[0].classList.add('active');
-} else if(orderKind === 'name' && orderType === 'desc' ) {
-  orderObjects[1].classList.add('active');
-}
-
-if(orderKind === 'enter' && orderType === 'asc' ) {
-  orderObjects[2].classList.add('active');
-} else if(orderKind === 'enter' && orderType === 'desc' ) {
-  orderObjects[3].classList.add('active');
-}
-
-if(orderKind === 'expire' && orderType === 'asc' ) {
-  orderObjects[4].classList.add('active');
-} else if(orderKind === 'expire' && orderType === 'desc' ) {
-  orderObjects[5].classList.add('active');
-}
+  document.getElementById('order-' + orderColumn + '-' + orderDirection).classList.add('active');
 
   groceriesRead(q);
 
