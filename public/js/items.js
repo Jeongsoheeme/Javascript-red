@@ -24,8 +24,8 @@ const itemsCreate = function(form) {
   const itemNameObject = form['item-name'];
   const item = {
     name: itemNameObject.value,
-    enter: '2023-03-22',
-    expire: '2023-03-29'
+    enter: moment().format('YYYY-MM-DD'),
+    expire: moment().add(13,'days').format('YYYY-MM-DD')
   };
 
   axios.post('https://javascript-red-jsh-default-rtdb.firebaseio.com/items.json', item).then(function(response) {
@@ -61,6 +61,7 @@ const itemsRead = function() {
       itemsGroceryObject.uid = uid;
       index += 1;
     }
+
     console.log('Read', items);
   });
 };

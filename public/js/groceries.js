@@ -33,9 +33,13 @@ const groceriesCreate = function(input) {
 
 const groceriesRead = function(q, orderColumn, orderDirection) {
   axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries.json').then(function(response) {
-    const tagDivParent = document.getElementById('tag-tbody-parent');
+  let tagDivParent;
+  let tagDivChild;
+  if (document.getElementById('tag-tbody-parent')){
+    tagDivParent = document.getElementById('tag-tbody-parent');
     tagDivParent.innerHTML = '';
-    const tagDivChild = document.getElementById('tag-tr-child');
+    tagDivChild = document.getElementById('tag-tr-child');
+  }  
     let groceries = [];
     
     for (let uid in response.data) {
@@ -45,14 +49,24 @@ const groceriesRead = function(q, orderColumn, orderDirection) {
         groceries.push(grocery);
       }
     }
-
-     groceries = _.orderBy( groceries, orderColumn, orderDirection);
     
+    //정렬시키기
+    groceries = _.orderBy( groceries, orderColumn, orderDirection);
+    
+    // 카운트
+    let count = 0;
+
     for (let index in groceries) {
+      const grocery = groceries[index];
+      //만료 D-7일보다 작으면 카운트에 넣기
+      if((moment().diff(moment(grocery.expire), 'days') - 1) >= -7){
+        count++;
+      }
+      if (document.getElementsByName('groceries-sequence').length === 0) continue;
+
       const uid = groceries[index].uid;
       const newDivChild = tagDivChild.cloneNode(true);
       tagDivParent.appendChild(newDivChild);
-      const grocery = groceries[index];
       const groceriesSequenceObject = document.getElementsByName('groceries-sequence')[index];
       const groceriesNameObject = document.getElementsByName('groceries-name')[index];
       const groceriesEnterObject = document.getElementsByName('groceries-enter')[index];
@@ -68,7 +82,12 @@ const groceriesRead = function(q, orderColumn, orderDirection) {
       groceriesDeleteObject.uid = uid;
       groceriesUpdateObject.uid = uid;
       groceriesUpdateObject.index = index;
+
     }
+
+    // 카운트 넣기
+    document.getElementById('menu-groceries-counter').innerHTML = count;
+
     console.log('Read', groceries);
   });
 };
