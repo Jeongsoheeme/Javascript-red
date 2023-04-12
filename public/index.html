@@ -8,6 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="./index.css" rel="stylesheet">
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment.min.js"></script>
+  <script defer src="./js/items.js"></script>
+  <script src="./js/groceries.js"></script>
 </head>
 <body>
   <div class="wrap">
@@ -23,7 +28,7 @@
       </div>
       <div class="menu-groceries">
         <a href="./groceries.html" id="menu-a-groceries"><span class="material-icons">kitchen</span></a>
-        <div><span id="menu-groceries-counter">1</span></div>
+        <div><span id="menu-groceries-counter">0</span></div>
       </div>
       <div class="empty"></div>
       <div>
@@ -52,4 +57,5 @@
 const accountToggle = function() {
   document.getElementsByClassName('account-menu')[0].classList.toggle('active');
 }
+groceriesRead('', '', '');
 </script>
