@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
   <link href="./index.css" rel="stylesheet">
   <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
   <script src="./js/groceries.js"></script>
 
 </head>
@@ -173,8 +174,9 @@ qObject.value = q;
 qObject.focus(); //새로고침을 하면 포커스가 자동으로 됨
 // inputTextObject.blur(); //새로고침을 하면 포커스가 없어짐
 
+//정렬 버튼 active 시키기
   document.getElementById('order-' + orderColumn + '-' + orderDirection).classList.add('active');
 
-  groceriesRead(q);
+  groceriesRead(q, orderColumn, orderDirection);
 
 </script>

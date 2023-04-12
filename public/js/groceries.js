@@ -31,12 +31,12 @@ const groceriesCreate = function(input) {
   }
 };
 
-const groceriesRead = function(q) {
+const groceriesRead = function(q, orderColumn, orderDirection) {
   axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries.json').then(function(response) {
     const tagDivParent = document.getElementById('tag-tbody-parent');
     tagDivParent.innerHTML = '';
     const tagDivChild = document.getElementById('tag-tr-child');
-    const groceries = [];
+    let groceries = [];
     
     for (let uid in response.data) {
       const grocery = response.data[uid];
@@ -45,6 +45,8 @@ const groceriesRead = function(q) {
         groceries.push(grocery);
       }
     }
+
+     groceries = _.orderBy( groceries, orderColumn, orderDirection);
     
     for (let index in groceries) {
       const uid = groceries[index].uid;
