@@ -1,11 +1,13 @@
 firebase.auth().onAuthStateChanged(function(firebaseUser) {
     console.log(firebaseUser);
+
     if (firebaseUser) {
       document.getElementById('login-guest').style.display ='none';
       document.getElementById('login').style.display ='none';
       document.getElementById('hello').innerHTML = 'Hello ' + firebaseUser.email + '!';
       document.getElementById('hello').style.display ='block';
       document.getElementById('logout').style.display ='block';
+      firebaseAfterLogin();
     } else {
         document.getElementById('hello').style.display ='none';
         document.getElementById('logout').style.display ='none';
