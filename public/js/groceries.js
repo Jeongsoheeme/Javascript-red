@@ -33,13 +33,6 @@ const groceriesCreate = function(input) {
 
 const groceriesRead = function(q, orderColumn, orderDirection) {
   axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries.json').then(function(response) {
-  let tagDivParent;
-  let tagDivChild;
-  if (document.getElementById('tag-tbody-parent')){
-    tagDivParent = document.getElementById('tag-tbody-parent');
-    tagDivParent.innerHTML = '';
-    tagDivChild = document.getElementById('tag-tr-child');
-  }  
     let groceries = [];
     
     for (let uid in response.data) {
@@ -49,21 +42,34 @@ const groceriesRead = function(q, orderColumn, orderDirection) {
         groceries.push(grocery);
       }
     }
-    
-    //정렬시키기
-    groceries = _.orderBy( groceries, orderColumn, orderDirection);
-    
+
+    //함수가 실행될때 시간 확인 (0.5초부터 확인해봐야한다. 500ms)
+    console.time('start');
+
     // 카운트
     let count = 0;
-
     for (let index in groceries) {
       const grocery = groceries[index];
       //만료 D-7일보다 작으면 카운트에 넣기
       if((moment().diff(moment(grocery.expire), 'days') - 1) >= -7){
         count++;
       }
-      if (document.getElementsByName('groceries-sequence').length === 0) continue;
+    }
 
+    // 카운트 넣기
+    document.getElementById('menu-groceries-counter').innerHTML = count;
+    console.timeEnd('start');
+    if (document.getElementsByName('groceries-sequence').length === 0) return;
+    
+    //정렬시키기
+    groceries = _.orderBy( groceries, orderColumn, orderDirection);
+
+    //화면 그리기
+    const tagDivParent = document.getElementById('tag-tbody-parent');
+    tagDivParent.innerHTML = '';
+    const tagDivChild = document.getElementById('tag-tr-child');
+    for (let index in groceries) {
+      const grocery = groceries[index];
       const uid = groceries[index].uid;
       const newDivChild = tagDivChild.cloneNode(true);
       tagDivParent.appendChild(newDivChild);
@@ -84,9 +90,6 @@ const groceriesRead = function(q, orderColumn, orderDirection) {
       groceriesUpdateObject.index = index;
 
     }
-
-    // 카운트 넣기
-    document.getElementById('menu-groceries-counter').innerHTML = count;
 
     console.log('Read', groceries);
   });
