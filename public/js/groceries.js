@@ -58,8 +58,8 @@ const groceriesRead = function(q, orderColumn, orderDirection) {
 
     // 카운트 넣기
     document.getElementById('menu-groceries-counter').innerHTML = count;
-    if (document.getElementsByName('groceries-sequence').length === 0) return;
     console.timeEnd('start');
+    if (document.getElementsByName('groceries-sequence').length === 0) return;
     
     //정렬시키기
     groceries = _.orderBy( groceries, orderColumn, orderDirection);
