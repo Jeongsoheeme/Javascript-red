@@ -56,6 +56,21 @@ const groceriesRead = function(q, orderColumn, orderDirection) {
       }
     }
 
+    //items와 비교해서 checkbox 체크하기
+    if (document.location.pathname === '/items.html') {
+      console.log('아이템 존재', items, groceries);
+      let i = 0;
+      for (let itemUid in items) {
+        for(let j in groceries){
+          const grocery = groceries[j];
+          if(itemUid === grocery.uid){
+            document.getElementsByName('items-grocery')[i].checked = true;
+          }
+        }
+        i++;
+      }
+    }
+
     // 카운트 넣기
     document.getElementById('menu-groceries-counter').innerHTML = count;
     console.timeEnd('start');
