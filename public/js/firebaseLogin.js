@@ -38,8 +38,8 @@ firebase.auth().onAuthStateChanged(function(_firebaseUser) {
   };
   
   const emailSignUp = function(form) {
-    const email = form['signUp-email'].value
-    const password = form['signUp-password'].value
+    const email = form['signUp-email'].value;
+    const password = form['signUp-password'].value;
     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
       console.error(error);
       alert(error.message);
@@ -47,8 +47,8 @@ firebase.auth().onAuthStateChanged(function(_firebaseUser) {
   };
   
   const emailSignIn = function(form) {
-    const email = form['signIn-email'].value
-    const password = form['signIn-password'].value
+    const email = form['signIn-email'].value;
+    const password = form['signIn-password'].value;
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       console.error(error);
       alert(error.message);
@@ -56,8 +56,8 @@ firebase.auth().onAuthStateChanged(function(_firebaseUser) {
   };
 
   const guestSignIn = function() {
-    const email = 'guest@guest.com'
-    const password = 'guestguest'
+    const email = 'guest@guest.com';
+    const password = 'guestguest';
     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
       console.error(error);
       alert(error.message);

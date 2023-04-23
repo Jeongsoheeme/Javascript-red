@@ -13,7 +13,7 @@ const groceriesCreate = function(input) {
   const uid = input.uid;
   const checked = input.checked;
   if (checked) {
-    const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries/' + uid + '.json';
+    const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/groceries/' + uid + '.json';
     const itemsNameObject = document.getElementsByName('items-name')[index];
     const itemsEnterObject = document.getElementsByName('items-enter')[index];
     const itemsExpireObject = document.getElementsByName('items-expire')[index];
@@ -32,7 +32,7 @@ const groceriesCreate = function(input) {
 };
 
 const groceriesRead = function(q, orderColumn, orderDirection) {
-  axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries.json').then(function(response) {
+  axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/groceries.json').then(function(response) {
     let groceries = [];
     
     for (let uid in response.data) {
@@ -96,14 +96,14 @@ const groceriesRead = function(q, orderColumn, orderDirection) {
 };
 
 const groceriesDelete = function(uid, callback) {
-  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries/' + uid + '.json';
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/groceries/' + uid + '.json';
   axios.delete(url).then(function(){
     callback && callback();
   });
 };
 
 const groceriesUpdate = function(uid) {
-  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/groceries/' + uid + '.json';
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/groceries/' + uid + '.json';
   const name = document.getElementsByName('grocery-name')[0].value;
   const enter = document.getElementsByName('grocery-enter')[0].value;
   const expire = document.getElementsByName('grocery-expire')[0].value;
@@ -116,7 +116,7 @@ const groceriesUpdate = function(uid) {
   
   axios.patch(url, grocery).then(function(){
     modalToggle();
-    groceriesRead();
+    firebaseAfterLogin();
   });
 
 };
