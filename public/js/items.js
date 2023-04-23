@@ -28,7 +28,7 @@ const itemsCreate = function(form) {
     expire: moment().add(13,'days').format('YYYY-MM-DD')
   };
 
-  axios.post('https://javascript-red-jsh-default-rtdb.firebaseio.com/items.json', item).then(function(response) {
+  axios.post('https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/items.json', item).then(function(response) {
     itemNameObject.value = '';
     itemsRead();
   });
@@ -36,7 +36,8 @@ const itemsCreate = function(form) {
 };
 
 const itemsRead = function() {
-  axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/items.json').then(function(response) {
+  console.log(firebaseUser)
+  axios.get('https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/items.json').then(function(response) {
     items = response.data;
     const tagDivParent = document.getElementById('tag-tbody-parent');
     tagDivParent.innerHTML = '';
@@ -66,17 +67,15 @@ const itemsRead = function() {
   });
 };
 
-itemsRead();
-
 const itemsDelete = function(uid) {
-  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/items/' + uid + '.json';
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/items/' + uid + '.json';
   axios.delete(url).then(function(){
     itemsRead();
   });
 };
 
 const itemsUpdate = function(index, uid) {
-  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/items/' + uid + '.json';
+  const url = 'https://javascript-red-jsh-default-rtdb.firebaseio.com/'+firebaseUser.uid+'/items/' + uid + '.json';
   
   const name = document.getElementsByName('items-name')[index].innerHTML;
   const enter = document.getElementsByName('items-enter')[index].innerHTML;
@@ -88,7 +87,6 @@ const itemsUpdate = function(index, uid) {
   };
   
   axios.patch(url, item).then(function(){
-    itemsRead();
   });
 
 };

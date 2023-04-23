@@ -1,6 +1,8 @@
-firebase.auth().onAuthStateChanged(function(firebaseUser) {
-    console.log(firebaseUser);
+let firebaseUser;
 
+firebase.auth().onAuthStateChanged(function(_firebaseUser) {
+    firebaseUser = _firebaseUser;
+    console.log(firebaseUser);
     if (firebaseUser) {
       document.getElementById('login-guest').style.display ='none';
       document.getElementById('login').style.display ='none';
